@@ -1,4 +1,4 @@
-#Budget Web Application
+# Budget Web Application
 
 Application is web app based on REST service with database. App reads pdf files with bank accounts billings and save entries to the database. 
 It will be possible to read PDFs from different banks.
