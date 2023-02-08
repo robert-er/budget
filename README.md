@@ -12,6 +12,9 @@ Duplicated entries should be ignored. Then app will classify expenses and income
 
 ### Endpoints
 
-GET http://localhost:8080/file?filename=path_to_pdf - read PDF files. Returns pdf path. 
-At the moment file is logged by logger.
+GET http://localhost:8080/file?filepath=path_to_pdf - read PDF files.
+Returns pdf path.
+At the moment file is logged by logger. 
+
+Example: http://localhost:8080/file?filepath=C:/tmp/wyciag.pdf
 

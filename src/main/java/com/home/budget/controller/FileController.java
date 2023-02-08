@@ -24,9 +24,9 @@ public class FileController {
             org.apache.logging.log4j.LogManager.getLogger(FileController.class);
 
     @GetMapping
-    public ResponseEntity<String> download(@RequestParam("filename") String filename) {
+    public ResponseEntity<String> download(@RequestParam("filepath") String filepath) {
 
-        File file = new File(filename);
+        File file = new File(filepath);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
