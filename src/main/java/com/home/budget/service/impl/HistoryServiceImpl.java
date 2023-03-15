@@ -3,7 +3,6 @@ package com.home.budget.service.impl;
 import com.home.budget.model.History;
 import com.home.budget.repository.HistoryRepository;
 import com.home.budget.service.HistoryService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

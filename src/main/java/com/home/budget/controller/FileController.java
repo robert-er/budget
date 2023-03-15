@@ -1,8 +1,8 @@
 package com.home.budget.controller;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
-import org.apache.pdfbox.text.PDFTextStripperByArea;
+import com.home.budget.service.PdfParser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -13,15 +13,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
-import java.io.IOException;
 
 @RestController
 @RequestMapping("file")
 public class FileController {
 
+    private final PdfParser pdfParser;
+
+    private static final Logger log = LogManager.getLogger(FileController.class);
+
     @Autowired
-    private static final org.apache.logging.log4j.Logger log =
-            org.apache.logging.log4j.LogManager.getLogger(FileController.class);
+    public FileController(PdfParser pdfParser) {
+        this.pdfParser = pdfParser;
+    }
 
     @GetMapping
     public ResponseEntity<String> download(@RequestParam("filepath") String filepath) {
@@ -33,7 +37,8 @@ public class FileController {
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
 
-        printFile(file);
+
+        pdfParser.parsePdf(file);
 
         return ResponseEntity.ok()
                 .headers(headers)
@@ -42,35 +47,5 @@ public class FileController {
                 .body(file.getAbsolutePath());
     }
 
-    private void printFile(File file) {
-        String[] fileLines = readPDFLines(file);
 
-        for (String line : fileLines) {
-            log.info(line);
-        }
-    }
-
-    private static String[] readPDFLines(File file) {
-
-        String[] lines = new String[0];
-        try (PDDocument document = PDDocument.load(file)) {
-            document.getClass();
-
-            if (!document.isEncrypted()) {
-                PDFTextStripperByArea stripper = new PDFTextStripperByArea();
-                stripper.setSortByPosition(true);
-
-                PDFTextStripper tStripper = new PDFTextStripper();
-
-                String pdfFileInText = tStripper.getText(document);
-
-                // split by whitespace
-                lines = pdfFileInText.split("\\r?\\n");
-                document.close();
-            }
-        } catch (IOException e) {
-            log.error("Unable to open file [{}]", file, e);
-        }
-        return lines;
-    }
 }

@@ -84,4 +84,20 @@ public class History {
                 amount,
                 balanceAfter);
     }
+
+    @Override
+    public String toString() {
+        return "History{" +
+                "id=" + id +
+                ", operationDate=" + operationDate +
+                ", postingDate=" + postingDate +
+                ", description='" + description + '\'' +
+                ", fromAccount='" + fromAccount + '\'' +
+                ", toAccount='" + toAccount + '\'' +
+                ", cardNumber='" + cardNumber + '\'' +
+                ", title='" + title + '\'' +
+                ", amount=" + amount +
+                ", balanceAfter=" + balanceAfter +
+                '}';
+    }
 }
